@@ -24,14 +24,24 @@ export function SessionHeader({ session, onOpenReceipt }: SessionHeaderProps) {
           </div>
 
           <div className="flex flex-wrap gap-1.5 mt-2">
-            {session.badges.map((badge) => (
-              <span
-                key={badge}
-                className="px-2 py-0.5 text-[10px] font-mono rounded-full bg-blue-950/60 border border-cyan-500/30 text-cyan-300"
-              >
-                {badge}
-              </span>
-            ))}
+            {session.badges.map((badge) => {
+              const isLiveTrace = badge === "LIVE SESSION TRACE";
+              const isDemoData = badge === "Demo Audit Data";
+              return (
+                <span
+                  key={badge}
+                  className={`px-2.5 py-0.5 text-[10px] font-mono rounded-full border ${
+                    isLiveTrace
+                      ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 font-bold shadow-[0_0_10px_rgba(34,211,238,0.3)] animate-pulse"
+                      : isDemoData
+                      ? "bg-slate-900/90 border-slate-700/80 text-slate-400 font-medium"
+                      : "bg-blue-950/60 border-cyan-500/30 text-cyan-300"
+                  }`}
+                >
+                  {badge}
+                </span>
+              );
+            })}
           </div>
         </div>
 

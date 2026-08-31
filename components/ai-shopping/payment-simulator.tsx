@@ -147,8 +147,14 @@ export function PaymentSimulator({
 
       onAuditEvent?.(
         "RAZORPAY_ORDER_CREATED",
-        `Real Razorpay Order created: ${realRazorpayOrderId}`,
-        `Amount: ${orderData.amountPaise} paise (₹${orderData.amount}) | Currency: INR`
+        `Razorpay Test Order created for ₹${totalAmount.toLocaleString("en-IN")}.`,
+        `Amount: ₹${totalAmount.toLocaleString("en-IN")} | Currency: INR | Mode: TEST`
+      );
+
+      onAuditEvent?.(
+        "CHECKOUT_OPENED",
+        "Razorpay Standard Checkout opened in Test Mode.",
+        `Order ID: ${realRazorpayOrderId}`
       );
 
       // 2. Configure Razorpay Standard Checkout options with returned order_id
@@ -205,9 +211,9 @@ export function PaymentSimulator({
             setStatusMessage("Razorpay signature verified successfully. Order completed!");
 
             onAuditEvent?.(
-              "PAYMENT_SIGNATURE_VERIFIED",
-              "HMAC SHA-256 signature verification PASSED.",
-              "Match: PASSED"
+              "PAYMENT_VERIFICATION",
+              "Razorpay payment signature verified server-side using HMAC SHA-256. Payment integrity confirmed before order completion.",
+              "Result: PASSED"
             );
             onAuditEvent?.(
               "PAYMENT_COMPLETED",

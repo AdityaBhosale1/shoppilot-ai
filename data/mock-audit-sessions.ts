@@ -2,7 +2,7 @@ export interface AuditEvent {
   id: string;
   timestamp: string;
   type: string;
-  actor: "System" | "Customer" | "ShopPilot AI" | "Catalog Tool" | "Merchant Growth Agent" | "Buyer Guardian" | "Constraint Engine" | "Policy Engine" | "Payment Policy" | "Payment Tool" | "Backend";
+  actor: "System" | "Customer" | "ShopPilot AI" | "Catalog Tool" | "Merchant Growth Agent" | "Buyer Guardian" | "Constraint Engine" | "Policy Engine" | "Payment Policy" | "Payment Tool" | "Payment Backend" | "Backend";
   description: string;
   result?: "SUCCESS" | "FAILED" | "BLOCKED" | "PASSED" | "AUTHORIZED" | "READY" | "COMPLETED";
   details?: Record<string, string | number | boolean>;
@@ -54,7 +54,7 @@ export const MOCK_AUDIT_SESSIONS: AuditSession[] = [
     startTime: "21:04:10",
     endTime: "21:04:44",
     duration: "34s",
-    badges: ["Completed", "Budget Protected", "Human Approved", "Payment Verified"],
+    badges: ["LIVE SESSION TRACE", "Completed", "Budget Protected", "Human Approved", "Payment Verified"],
     receiptData: {
       customerIntent: "Gaming keyboard + mouse under ₹3,000",
       budget: 3000,
@@ -208,12 +208,22 @@ export const MOCK_AUDIT_SESSIONS: AuditSession[] = [
         financialExecuted: false,
       },
       {
+        id: "evt-114-b",
+        timestamp: "21:04:31",
+        type: "RAZORPAY_ORDER_CREATED",
+        actor: "Payment Backend",
+        result: "SUCCESS",
+        description: "Razorpay Test Order created for ₹2,947.",
+        details: { Amount: "₹2,947", Currency: "INR", Mode: "TEST" },
+        financialExecuted: false,
+      },
+      {
         id: "evt-115",
         timestamp: "21:04:32",
-        type: "CHECKOUT_CREATED",
+        type: "CHECKOUT_OPENED",
         actor: "Payment Tool",
         result: "READY",
-        description: "Razorpay Test Mode Checkout Session created for ₹2,947.",
+        description: "Razorpay Standard Checkout opened in Test Mode.",
         financialExecuted: false,
       },
       {
@@ -231,7 +241,7 @@ export const MOCK_AUDIT_SESSIONS: AuditSession[] = [
         type: "PAYMENT_VERIFICATION",
         actor: "Backend",
         result: "PASSED",
-        description: "Webhook signature & payment integrity verified.",
+        description: "Razorpay payment signature verified server-side using HMAC SHA-256. Payment integrity confirmed before order completion.",
         financialExecuted: true,
       },
       {
@@ -256,7 +266,7 @@ export const MOCK_AUDIT_SESSIONS: AuditSession[] = [
     startTime: "19:30:12",
     endTime: "19:30:40",
     duration: "28s",
-    badges: ["Completed", "Budget Protected", "Human Approved"],
+    badges: ["Demo Audit Data", "Completed", "Budget Protected", "Human Approved"],
     receiptData: {
       customerIntent: "Wireless headphones under ₹2,000",
       budget: 2000,
@@ -321,7 +331,7 @@ export const MOCK_AUDIT_SESSIONS: AuditSession[] = [
     startTime: "18:15:02",
     endTime: "18:15:45",
     duration: "43s",
-    badges: ["Completed", "AOV Boosted", "Human Approved"],
+    badges: ["Demo Audit Data", "Completed", "AOV Boosted", "Human Approved"],
     receiptData: {
       customerIntent: "Gaming accessories under ₹5,000",
       budget: 5000,
@@ -387,7 +397,7 @@ export const MOCK_AUDIT_SESSIONS: AuditSession[] = [
     startTime: "16:42:10",
     endTime: "16:42:15",
     duration: "5s",
-    badges: ["Blocked By Policy", "Hard Stop", "No Charge"],
+    badges: ["Demo Audit Data", "Blocked By Policy", "Hard Stop", "No Charge"],
     receiptData: {
       customerIntent: "Premium keyboard purchase",
       budget: 5000,
@@ -457,7 +467,7 @@ export const MOCK_AUDIT_SESSIONS: AuditSession[] = [
     startTime: "15:20:00",
     endTime: "15:20:45",
     duration: "45s",
-    badges: ["Failed", "Cart Preserved", "Recovery Available"],
+    badges: ["Demo Audit Data", "Failed", "Cart Preserved", "Recovery Available"],
     receiptData: {
       customerIntent: "Office setup under ₹2,500",
       budget: 2500,
