@@ -46,7 +46,21 @@ export function AIShoppingDemo() {
   };
 
   const handleStartDemo = async (prompt: string) => {
-    setCurrentPrompt(prompt);
+    const trimmedPrompt = prompt ? prompt.trim() : "";
+
+    if (!trimmedPrompt) {
+      addLog(
+        "INPUT_VALIDATION_FAILED",
+        "Shopping request is empty.",
+        "Actor: ShopPilot Request Validator",
+        "FAILED"
+      );
+      setIsLoading(false);
+      setStage("IDLE");
+      return;
+    }
+
+    setCurrentPrompt(trimmedPrompt);
     setIsLoading(true);
     setCustomerApproved(false);
     setLogs([]);
@@ -57,7 +71,7 @@ export function AIShoppingDemo() {
     setAcceptedAlternative(null);
     setStage("SEARCHING");
 
-    addLog("INTENT_RECEIVED", `User query: "${prompt}"`, "Session: SP-1047", "INFO");
+    addLog("INTENT_RECEIVED", `User query: "${trimmedPrompt}"`, "Session: SP-1047", "INFO");
 
     try {
       const response = await fetch("/api/ai/shop", {
@@ -65,7 +79,8 @@ export function AIShoppingDemo() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sessionId: "SP-1047",
-          prompt,
+          message: trimmedPrompt,
+          prompt: trimmedPrompt,
           action: "PROCESS_INTENT",
         }),
       });
@@ -73,7 +88,16 @@ export function AIShoppingDemo() {
       const data = await response.json();
 
       if (!data.success) {
-        addLog("POLICY_CHECK", data.message || "Failed to process intent.", "Error", "FAILED");
+        if (data.error === "INPUT_VALIDATION_FAILED") {
+          addLog(
+            "INPUT_VALIDATION_FAILED",
+            data.message || "Shopping request is empty.",
+            "Actor: ShopPilot Request Validator",
+            "FAILED"
+          );
+        } else {
+          addLog("POLICY_CHECK", data.message || "Failed to process intent.", "Error", "FAILED");
+        }
         setIsLoading(false);
         setStage("IDLE");
         return;

@@ -30,7 +30,8 @@ export interface AuditLogItem {
     | "PAYMENT_SIGNATURE_VERIFIED"
     | "PAYMENT_COMPLETED"
     | "CHECKOUT_CANCELLED"
-    | "PAYMENT_SIGNATURE_INVALID";
+    | "PAYMENT_SIGNATURE_INVALID"
+    | "INPUT_VALIDATION_FAILED";
   message: string;
   detail?: string;
   status?: "INFO" | "SUCCESS" | "FAILED" | "WARN";

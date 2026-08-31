@@ -22,14 +22,16 @@ export function ShoppingInput({ onSubmit, isLoading }: ShoppingInputProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt.trim() || isLoading) return;
+    if (!prompt || prompt.trim().length === 0 || isLoading) return;
     onSubmit(prompt.trim());
   };
 
   const handleChipClick = (chipText: string) => {
     setPrompt(chipText);
-    onSubmit(chipText);
+    onSubmit(chipText.trim());
   };
+
+  const isButtonDisabled = !prompt || prompt.trim().length === 0 || isLoading;
 
   return (
     <div className="rounded-2xl bg-[#050816]/85 border border-blue-900/40 backdrop-blur-xl p-5 shadow-xl space-y-4">
@@ -61,7 +63,7 @@ export function ShoppingInput({ onSubmit, isLoading }: ShoppingInputProps) {
               type="button"
               disabled={isLoading}
               onClick={() => handleChipClick(chip)}
-              className="px-2.5 py-1 text-xs font-medium text-slate-300 bg-blue-950/40 hover:bg-blue-900/60 hover:text-white border border-blue-800/40 hover:border-cyan-400/50 rounded-lg transition-all text-left disabled:opacity-50"
+              className="px-2.5 py-1 text-xs font-medium text-slate-300 bg-blue-950/40 hover:bg-blue-900/60 hover:text-white border border-blue-800/40 hover:border-cyan-400/50 rounded-lg transition-all text-left disabled:opacity-50 cursor-pointer"
             >
               &ldquo;{chip}&rdquo;
             </button>
@@ -78,13 +80,13 @@ export function ShoppingInput({ onSubmit, isLoading }: ShoppingInputProps) {
             onChange={(e) => setPrompt(e.target.value)}
             disabled={isLoading}
             placeholder="Example: I need a gaming keyboard and mouse under ₹3,000."
-            className="w-full p-3 text-xs sm:text-sm text-white bg-[#030612]/90 border border-slate-800 rounded-xl focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 placeholder:text-slate-500 resize-none transition-all disabled:opacity-60"
+            className="w-full p-3 text-xs sm:text-sm text-white bg-[#030612]/90 border border-slate-800 rounded-xl focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 placeholder:text-slate-500 resize-none transition-all disabled:opacity-60 font-sans"
           />
         </div>
 
         <button
           type="submit"
-          disabled={!prompt.trim() || isLoading}
+          disabled={isButtonDisabled}
           className="w-full py-2.5 px-4 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 rounded-xl transition-all duration-200 shadow-md shadow-blue-600/30 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
