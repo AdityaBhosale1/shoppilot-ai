@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { MOCK_AUDIT_SESSIONS, AuditEvent } from "@/data/mock-audit-sessions";
 import { SessionExplorer } from "./session-explorer";
 import { SessionHeader } from "./session-header";
@@ -19,7 +20,13 @@ export function AuditTrailDashboard() {
     MOCK_AUDIT_SESSIONS[0];
 
   return (
-    <div className="w-full space-y-6">
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="w-full space-y-6"
+    >
       {/* 2-COLUMN LAYOUT (DESKTOP: 30% LEFT / 70% RIGHT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
@@ -63,7 +70,7 @@ export function AuditTrailDashboard() {
           onClose={() => setReceiptModalOpen(false)}
         />
       )}
-    </div>
+    </motion.div>
   );
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { ArchitectureFlow } from "./architecture-flow";
 import { ExplainableCard } from "./explainable-card";
 import { BoundedLimitsCard } from "./bounded-limits-card";
@@ -12,7 +13,13 @@ import { SafetyMetricsStrip } from "./safety-metrics-strip";
 
 export function SafetyDashboard() {
   return (
-    <div className="w-full space-y-8">
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="w-full space-y-8"
+    >
       {/* 1. MAIN ARCHITECTURE PIPELINE FLOW */}
       <ArchitectureFlow />
 
@@ -38,7 +45,7 @@ export function SafetyDashboard() {
 
       {/* 5. COMPACT SAFETY METRICS STRIP */}
       <SafetyMetricsStrip />
-    </div>
+    </motion.div>
   );
 }
 

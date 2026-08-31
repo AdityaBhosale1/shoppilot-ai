@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { lockBodyScroll, unlockBodyScroll, forceResetBodyScroll } from "@/lib/scroll-lock";
 
 interface NavItem {
@@ -100,7 +101,12 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-4 sm:top-5 inset-x-0 z-50 px-4 sm:px-6 md:px-8 max-w-6xl mx-auto transition-all duration-300">
+    <motion.header
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed top-4 sm:top-5 inset-x-0 z-50 px-4 sm:px-6 md:px-8 max-w-6xl mx-auto transition-all duration-300"
+    >
       <nav
         aria-label="Main Navigation"
         className={`relative rounded-full border px-4 sm:px-6 h-16 flex items-center justify-between transition-all duration-300 ${
@@ -185,7 +191,10 @@ export function Navbar() {
               >
                 {item.label}
                 {isActive && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22D3EE]" />
+                  <motion.span
+                    layoutId="activeNavIndicator"
+                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22D3EE]"
+                  />
                 )}
               </a>
             );
@@ -195,10 +204,12 @@ export function Navbar() {
         {/* RIGHT SIDE CTA BUTTON & MOBILE HAMBURGER TOGGLE */}
         <div className="flex items-center gap-3">
           {/* "Try ShopPilot" CTA Button */}
-          <a
+          <motion.a
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.98 }}
             href="#ai-shopping"
             onClick={(e) => handleNavClick(e, "#ai-shopping")}
-            className="group inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 rounded-full transition-all duration-200 shadow-sm shadow-blue-600/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+            className="group inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 rounded-full transition-all duration-200 shadow-sm shadow-blue-600/30 hover:shadow-blue-500/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
           >
             <span>Try ShopPilot</span>
             <svg
@@ -213,7 +224,7 @@ export function Navbar() {
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>
-          </a>
+          </motion.a>
 
           {/* Mobile Hamburger Toggle Button */}
           <button
@@ -258,9 +269,13 @@ export function Navbar() {
 
       {/* MOBILE DROPDOWN PANEL */}
       {mobileMenuOpen && (
-        <div
+        <motion.div
           id="mobile-navigation-menu"
-          className="md:hidden mt-3 p-4 rounded-2xl bg-[#050816]/95 border border-blue-900/40 backdrop-blur-xl shadow-2xl space-y-1.5 transition-all animate-in fade-in slide-in-from-top-2 duration-200"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+          className="md:hidden mt-3 p-4 rounded-2xl bg-[#050816]/95 border border-blue-900/40 backdrop-blur-xl shadow-2xl space-y-1.5"
         >
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.href;
@@ -279,9 +294,9 @@ export function Navbar() {
               </a>
             );
           })}
-        </div>
+        </motion.div>
       )}
-    </header>
+    </motion.header>
   );
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Product } from "@/data/mock-products";
 import { ShoppingInput } from "./shopping-input";
 import { ProductCard } from "./product-card";
@@ -242,7 +243,12 @@ export function AIShoppingDemo() {
         <div className="lg:col-span-5 space-y-5">
           {/* IDLE PLACEHOLDER */}
           {stage === "IDLE" && (
-            <div className="rounded-2xl bg-[#050816]/80 border border-blue-900/40 backdrop-blur-xl p-8 text-center space-y-3 min-h-[380px] flex flex-col items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="rounded-2xl bg-[#050816]/80 border border-blue-900/40 backdrop-blur-xl p-8 text-center space-y-3 min-h-[380px] flex flex-col items-center justify-center"
+            >
               <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-cyan-400">
                 <svg
                   className="w-6 h-6"
@@ -262,16 +268,26 @@ export function AIShoppingDemo() {
               <p className="text-xs text-slate-400 max-w-sm">
                 {statusMessage || "Enter a shopping request or click a suggested prompt to see Merchant & Buyer Guardian Agents evaluate products in real-time."}
               </p>
-            </div>
+            </motion.div>
           )}
 
           {/* ACTIVE WORKFLOW PROGRESS STAGES */}
           {stage !== "IDLE" && (
-            <div className="space-y-5 animate-in fade-in duration-300">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-5"
+            >
               
               {/* MATCHED CANDIDATE PRODUCTS */}
               {matchedProducts.length > 0 && (
-                <div className="space-y-3">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="space-y-3"
+                >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono text-cyan-300 font-bold uppercase tracking-wider">
                       Catalog Search Results ({matchedProducts.length})
@@ -281,16 +297,28 @@ export function AIShoppingDemo() {
                     </span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {matchedProducts.slice(0, 4).map((product) => (
-                      <ProductCard key={product.id} product={product} />
+                    {matchedProducts.slice(0, 4).map((product, idx) => (
+                      <motion.div
+                        key={product.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: idx * 0.08 }}
+                      >
+                        <ProductCard product={product} />
+                      </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               )}
 
               {/* SAFE CART & DECISION RECEIPT */}
               {stage === "CART_READY" && finalCart.length > 0 && (
-                <div className="space-y-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="space-y-4"
+                >
                   {/* NEGOTIATED FINAL CART */}
                   <div className="p-4 sm:p-5 rounded-2xl bg-[#050816]/90 border border-emerald-500/40 space-y-4 shadow-xl">
                     <div className="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -300,29 +328,39 @@ export function AIShoppingDemo() {
                           Safe Negotiated Cart
                         </h4>
                       </div>
-                      <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/40">
+                      <motion.span
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        className="text-[10px] font-bold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/40"
+                      >
                         POLICY PASSED ✓
-                      </span>
+                      </motion.span>
                     </div>
 
                     {/* CART ITEMS LIST */}
                     <div className="space-y-2 font-mono text-xs">
-                      {finalCart.map((item) => (
-                        <div
-                          key={item.id}
-                          className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80"
-                        >
-                          <div className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                            <span className="text-slate-200 font-sans text-xs font-semibold">
-                              {item.name}
+                      <AnimatePresence>
+                        {finalCart.map((item, idx) => (
+                          <motion.div
+                            key={item.id}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: idx * 0.1 }}
+                            className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                              <span className="text-slate-200 font-sans text-xs font-semibold">
+                                {item.name}
+                              </span>
+                            </div>
+                            <span className="text-cyan-300 font-bold">
+                              ₹{item.price.toLocaleString("en-IN")}
                             </span>
-                          </div>
-                          <span className="text-cyan-300 font-bold">
-                            ₹{item.price.toLocaleString("en-IN")}
-                          </span>
-                        </div>
-                      ))}
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
 
                       {/* SUMMARY TOTALS */}
                       <div className="pt-2 border-t border-slate-800/80 font-mono text-xs space-y-1 text-slate-300">
@@ -377,10 +415,10 @@ export function AIShoppingDemo() {
                       }
                     />
                   </div>
-                </div>
+                </motion.div>
               )}
 
-            </div>
+            </motion.div>
           )}
         </div>
 

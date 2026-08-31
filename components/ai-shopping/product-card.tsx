@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { Product } from "@/data/mock-products";
 
 interface ProductCardProps {
@@ -30,11 +31,13 @@ export function ProductCard({
   };
 
   return (
-    <div
+    <motion.div
+      whileHover={{ y: isRejected ? 0 : -2 }}
+      transition={{ duration: 0.2 }}
       className={`p-3.5 rounded-xl border transition-all text-xs ${
         isRejected
           ? "bg-rose-950/20 border-rose-800/40 line-through opacity-70"
-          : "bg-[#030612]/80 border-slate-800/80 hover:border-blue-700/50"
+          : "bg-[#030612]/80 border-slate-800/80 hover:border-blue-700/50 hover:shadow-md"
       }`}
     >
       <div className="flex items-start justify-between gap-2">
@@ -72,7 +75,7 @@ export function ProductCard({
           </span>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

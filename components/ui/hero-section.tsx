@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 export function HeroSection() {
   const [isApproved, setIsApproved] = useState(false);
 
   return (
-    <section className="relative w-full min-h-[90vh] pt-28 sm:pt-36 lg:pt-40 pb-16 lg:pb-24 flex items-center justify-center overflow-hidden">
+    <section className="relative w-full pt-28 sm:pt-32 lg:pt-36 pb-12 lg:pb-20 overflow-hidden">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+        {/* DESKTOP ALIGNMENT: items-start aligns the top of badge with top of right card */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           
           {/* ================================================== */}
           {/* LEFT COLUMN — MESSAGING & CTAs (7 cols on lg) */}
@@ -16,37 +18,65 @@ export function HeroSection() {
           <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6 sm:space-y-7">
             
             {/* 1. TOP BADGE */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/60 border border-blue-500/30 backdrop-blur-md text-xs sm:text-sm font-medium text-slate-300 shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/60 border border-blue-500/30 backdrop-blur-md text-xs sm:text-sm font-medium text-slate-300 shadow-sm"
+            >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
               </span>
               <span>Agentic Commerce • Safe by Design</span>
-            </div>
+            </motion.div>
 
-            {/* 2. MAIN HEADING */}
+            {/* 2. MAIN HEADING (2 STAGE REVEAL) */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] sm:leading-[1.12]">
-              Turn Shopping Intent{" "}
-              <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
+              <motion.span
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="block"
+              >
+                Turn Shopping Intent
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
+                className="inline-block bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent"
+              >
                 Into Safe Commerce.
-              </span>
+              </motion.span>
             </h1>
 
             {/* 3. DESCRIPTION */}
-            <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.45 }}
+              className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal"
+            >
               ShopPilot AI combines a Merchant Growth Agent and Buyer Guardian
               Agent to discover products, optimize carts, protect customer
               constraints, and safely move every purchase from conversation to
               checkout.
-            </p>
+            </motion.p>
 
             {/* 4. CTA BUTTONS */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto pt-2">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.55 }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto pt-1"
+            >
               {/* Primary CTA */}
-              <a
-                href="#try-shoppilot"
-                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 rounded-full transition-all duration-200 shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+              <motion.a
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                href="#ai-shopping"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 rounded-full transition-all duration-200 shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
               >
                 <span>Start AI Shopping</span>
                 <svg
@@ -61,19 +91,24 @@ export function HeroSection() {
                   <line x1="5" y1="12" x2="19" y2="12" />
                   <polyline points="12 5 19 12 12 19" />
                 </svg>
-              </a>
+              </motion.a>
 
               {/* Secondary CTA */}
               <a
                 href="#how-it-works"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] active:bg-white/10 border border-slate-700/60 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] hover:border-slate-600 active:bg-white/10 border border-slate-700/60 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
               >
                 <span>See How It Works</span>
               </a>
-            </div>
+            </motion.div>
 
             {/* 5. TRUST / SAFETY ROW */}
-            <div className="pt-3 border-t border-slate-800/80 w-full max-w-xl">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.65 }}
+              className="pt-3 border-t border-slate-800/80 w-full max-w-xl"
+            >
               <div className="flex flex-wrap items-center gap-y-2 gap-x-5 text-xs sm:text-sm text-slate-400 font-medium">
                 <span className="inline-flex items-center gap-1.5">
                   <svg
@@ -118,14 +153,19 @@ export function HeroSection() {
                   Full audit trail
                 </span>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
           {/* ================================================== */}
           {/* RIGHT COLUMN — AGENTIC COMMERCE VISUAL (5 cols on lg) */}
           {/* ================================================== */}
-          <div className="lg:col-span-5 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="lg:col-span-5 w-full"
+          >
             {/* MAIN GLASSMORPHISM CARD */}
             <div className="relative rounded-3xl bg-[#050816]/85 border border-blue-900/40 backdrop-blur-xl p-5 sm:p-6 shadow-2xl shadow-black/80 space-y-4">
               
@@ -152,7 +192,12 @@ export function HeroSection() {
               <div className="relative space-y-3.5 pl-3 border-l-2 border-dashed border-blue-900/50">
                 
                 {/* 1. INTENT CARD */}
-                <div className="p-3.5 rounded-2xl bg-blue-950/30 border border-blue-800/30 relative">
+                <motion.div
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.45 }}
+                  className="p-3.5 rounded-2xl bg-blue-950/30 border border-blue-800/30 relative"
+                >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-semibold">
                       Customer Intent
@@ -169,7 +214,7 @@ export function HeroSection() {
                     <span>•</span>
                     <span>Category: <strong className="text-slate-200">Gaming</strong></span>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* FLOW ARROW 1 */}
                 <div className="flex justify-center -my-1">
@@ -177,7 +222,12 @@ export function HeroSection() {
                 </div>
 
                 {/* 2. MERCHANT AGENT BLOCK */}
-                <div className="p-3.5 rounded-2xl bg-indigo-950/25 border border-indigo-800/30">
+                <motion.div
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.58 }}
+                  className="p-3.5 rounded-2xl bg-indigo-950/25 border border-indigo-800/30"
+                >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-300 font-semibold">
                       Merchant Growth Agent
@@ -209,7 +259,7 @@ export function HeroSection() {
                       <span>₹3,297</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* FLOW ARROW 2 */}
                 <div className="flex justify-center -my-1">
@@ -217,7 +267,12 @@ export function HeroSection() {
                 </div>
 
                 {/* 3. BUYER GUARDIAN BLOCK */}
-                <div className="p-3.5 rounded-2xl bg-rose-950/20 border border-rose-900/30">
+                <motion.div
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.71 }}
+                  className="p-3.5 rounded-2xl bg-rose-950/20 border border-rose-900/30"
+                >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[11px] font-mono uppercase tracking-wider text-rose-300 font-semibold">
                       Buyer Guardian Agent
@@ -232,7 +287,7 @@ export function HeroSection() {
                   <p className="text-[11px] text-slate-400 mt-1 italic">
                     Searching for a safer alternative...
                   </p>
-                </div>
+                </motion.div>
 
                 {/* FLOW ARROW 3 */}
                 <div className="flex justify-center -my-1">
@@ -240,7 +295,12 @@ export function HeroSection() {
                 </div>
 
                 {/* 4. NEGOTIATED RESULT */}
-                <div className="p-3.5 rounded-2xl bg-emerald-950/20 border border-emerald-800/30">
+                <motion.div
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.84 }}
+                  className="p-3.5 rounded-2xl bg-emerald-950/20 border border-emerald-800/30"
+                >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-semibold">
                       Negotiated Optimal Cart
@@ -276,12 +336,17 @@ export function HeroSection() {
                       Price ✓
                     </span>
                   </div>
-                </div>
+                </motion.div>
 
               </div>
 
               {/* 5. PAYMENT GATE & APPROVAL */}
-              <div className="pt-3 border-t border-slate-800/80">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.95 }}
+                className="pt-3 border-t border-slate-800/80"
+              >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-slate-400 font-medium flex items-center gap-1.5">
                     <svg
@@ -345,10 +410,10 @@ export function HeroSection() {
                     </>
                   )}
                 </button>
-              </div>
+              </motion.div>
 
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { KpiCards } from "./kpi-cards";
 import { RevenueChart } from "./revenue-chart";
 import { ConversionFunnel } from "./conversion-funnel";
@@ -16,7 +17,13 @@ export function MerchantDashboard() {
   const filterOptions = ["Last 7 Days", "Last 30 Days", "This Month"];
 
   return (
-    <div className="w-full rounded-3xl bg-[#050816]/90 border border-blue-900/40 backdrop-blur-xl p-5 sm:p-7 space-y-6 shadow-2xl">
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="w-full rounded-3xl bg-[#050816]/90 border border-blue-900/40 backdrop-blur-xl p-5 sm:p-7 space-y-6 shadow-2xl"
+    >
       
       {/* DASHBOARD CONSOLE TOP HEADER */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
@@ -79,10 +86,10 @@ export function MerchantDashboard() {
 
       {/* 4. CONVERSION OPPORTUNITIES & RECENT SESSIONS */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-6">
+        <div className="lg:col-span-7">
           <ConversionOpportunities />
         </div>
-        <div className="lg:col-span-6">
+        <div className="lg:col-span-5">
           <RecentSessions />
         </div>
       </div>
@@ -90,14 +97,7 @@ export function MerchantDashboard() {
       {/* 5. AI INSIGHT CARD */}
       <AiInsightCard />
 
-      {/* FOOTER DEMO DATA DISCLAIMER */}
-      <div className="text-center pt-2 border-t border-slate-800/60">
-        <span className="text-[11px] font-mono text-slate-500">
-          Demo Analytics Data • Simulated for ShopPilot AI Commerce Preview
-        </span>
-      </div>
-
-    </div>
+    </motion.div>
   );
 }
 
