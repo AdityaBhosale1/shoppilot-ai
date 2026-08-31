@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad_OfficeWirelessMouse" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06091e" />
+      <stop offset="100%" stop-color="#0b112c" />
+    </linearGradient>
+    <linearGradient id="accentGrad_OfficeWirelessMouse" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <filter id="glow_OfficeWirelessMouse" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="400" height="300" rx="16" fill="url(#bgGrad_OfficeWirelessMouse)" stroke="#1e293b" stroke-width="2" />
+  
+  <!-- Subtle Grid Accent -->
+  <pattern id="grid_OfficeWirelessMouse" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5" opacity="0.4" />
+  </pattern>
+  <rect width="400" height="300" rx="16" fill="url(#grid_OfficeWirelessMouse)" />
+
+  <!-- Outer Glow Ring -->
+  <circle cx="200" cy="130" r="65" fill="#0ea5e9" opacity="0.15" filter="url(#glow_OfficeWirelessMouse)" />
+
+  <!-- Center Product Icon Container -->
+  <rect x="135" y="65" width="130" height="130" rx="24" fill="#030612" stroke="url(#accentGrad_OfficeWirelessMouse)" stroke-width="2" opacity="0.95" />
+  
+  <!-- Product SVG Icon -->
+  <g transform="translate(160, 90)" fill="none" stroke="url(#accentGrad_OfficeWirelessMouse)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 12 C24 12 20 28 20 48 C20 64 28 68 40 68 C52 68 60 64 60 48 C60 28 56 12 40 12 Z"/><line x1="40" y1="12" x2="40" y2="30"/>
+  </g>
+
+  <!-- Category Badge -->
+  <rect x="150" y="210" width="100" height="22" rx="11" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="200" y="225" font-family="monospace" font-size="10" font-weight="bold" fill="#10b981" text-anchor="middle" letter-spacing="1">OFFICE</text>
+
+  <!-- Product Title -->
+  <text x="200" y="255" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc" text-anchor="middle">Office Wireless Mouse</text>
+</svg>

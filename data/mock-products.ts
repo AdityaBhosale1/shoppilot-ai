@@ -7,6 +7,7 @@ export interface Product {
   tags: string[];
   category: "Gaming" | "Audio" | "Office" | "Accessories";
   description: string;
+  image?: string;
 }
 
 export const MOCK_PRODUCTS: Product[] = [
@@ -19,6 +20,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Gaming", "RGB", "Mechanical", "Wired", "Keyboard"],
     category: "Gaming",
     description: "Tactile mechanical switches with customizable per-key RGB backlighting.",
+    image: "/products/gaming-keyboard-pro.svg",
   },
   {
     id: "prod-2",
@@ -29,6 +31,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Gaming", "Low Latency", "Wireless", "Mouse"],
     category: "Gaming",
     description: "Ultra-fast 1ms response wireless gaming mouse with 10,000 DPI sensor.",
+    image: "/products/gaming-mouse-x.svg",
   },
   {
     id: "prod-3",
@@ -39,6 +42,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Gaming", "RGB", "Mousepad", "Accessories"],
     category: "Gaming",
     description: "Extended micro-woven surface with 360-degree ambient RGB lighting strip.",
+    image: "/products/rgb-mousepad-xl.svg",
   },
   {
     id: "prod-4",
@@ -49,6 +53,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Gaming", "Budget", "Mousepad", "Accessories", "Non-RGB"],
     category: "Gaming",
     description: "High-density cloth surface with anti-slip rubber base for precision control.",
+    image: "/products/essential-mousepad.svg",
   },
   {
     id: "prod-5",
@@ -59,6 +64,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Audio", "Wireless", "Bluetooth", "Headphones"],
     category: "Audio",
     description: "Lightweight over-ear headphones with 30-hour battery life and deep bass.",
+    image: "/products/wireless-headphones-lite.svg",
   },
   {
     id: "prod-6",
@@ -69,6 +75,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Audio", "ANC", "Wireless", "Headphones"],
     category: "Audio",
     description: "Active noise canceling wireless headset with studio-quality audio drivers.",
+    image: "/products/wireless-headphones-pro.svg",
   },
   {
     id: "prod-7",
@@ -79,6 +86,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Office", "Silent", "Ergonomic", "Keyboard", "Wired"],
     category: "Office",
     description: "Whisper-quiet chiclet keys with integrated palm rest for comfortable typing.",
+    image: "/products/office-keyboard.svg",
   },
   {
     id: "prod-8",
@@ -89,6 +97,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Office", "Silent", "Wireless", "Mouse"],
     category: "Office",
     description: "Compact optical mouse with silent click switches and multi-device pairing.",
+    image: "/products/office-wireless-mouse.svg",
   },
   {
     id: "prod-9",
@@ -99,6 +108,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Office", "Budget", "Wireless", "Mouse"],
     category: "Office",
     description: "Budget-friendly 2.4GHz wireless mouse with ergonomic contoured grip.",
+    image: "/products/cheapest-wireless-mouse.svg",
   },
   {
     id: "prod-10",
@@ -109,6 +119,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Gaming", "Audio", "Surround", "Headset", "Mic"],
     category: "Gaming",
     description: "Immersive 7.1 virtual surround sound headset with detachable noise-canceling mic.",
+    image: "/products/gaming-headset-71.svg",
   },
   {
     id: "prod-11",
@@ -119,6 +130,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Audio", "Streaming", "USB", "Microphone", "Accessories"],
     category: "Audio",
     description: "Studio-grade cardioid condenser USB mic with touch-to-mute and gain control.",
+    image: "/products/streamer-usb-microphone.svg",
   },
   {
     id: "prod-12",
@@ -129,6 +141,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Office", "Numpad", "Mechanical", "Keyboard"],
     category: "Office",
     description: "Standalone 21-key mechanical numeric pad ideal for financial accounting.",
+    image: "/products/mechanical-numpad.svg",
   },
   {
     id: "prod-13",
@@ -139,6 +152,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Office", "Ergonomic", "Wireless", "Mouse"],
     category: "Office",
     description: "Neutral handshake vertical design reducing forearm strain during long work hours.",
+    image: "/products/ergonomic-vertical-mouse.svg",
   },
   {
     id: "prod-14",
@@ -149,6 +163,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Gaming", "Tenkeyless", "Mechanical", "Non-RGB", "Keyboard"],
     category: "Gaming",
     description: "Compact tenkeyless mechanical keyboard with clean white LED backlighting.",
+    image: "/products/tkl-gaming-keyboard.svg",
   },
   {
     id: "prod-15",
@@ -159,6 +174,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Office", "Webcam", "Streaming", "Accessories"],
     category: "Accessories",
     description: "Full HD 1080p 60fps auto-focus webcam with dual stereo microphones.",
+    image: "/products/hd-webcam-pro.svg",
   },
   {
     id: "prod-16",
@@ -169,6 +185,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Accessories", "Stand", "Audio"],
     category: "Accessories",
     description: "Sleek aircraft-grade aluminum headphone stand with rubber anti-skid base.",
+    image: "/products/aluminum-headphone-stand.svg",
   },
   {
     id: "prod-17",
@@ -179,6 +196,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Accessories", "Hub", "USB-C", "Office"],
     category: "Accessories",
     description: "4K HDMI, 100W PD charging, and 3x USB 3.0 ports in a durable aluminum shell.",
+    image: "/products/usbc-multiport-hub.svg",
   },
   {
     id: "prod-18",
@@ -189,6 +207,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Audio", "Wireless", "Bluetooth", "Earbuds"],
     category: "Audio",
     description: "Truly wireless stereo earbuds with low-latency gaming mode and IPX5 water resistance.",
+    image: "/products/tws-earbuds-bass.svg",
   },
   {
     id: "prod-19",
@@ -199,6 +218,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Accessories", "Cable", "Desk"],
     category: "Accessories",
     description: "Neoprene zipper sleeve kit for organizing desk cables and hiding wires.",
+    image: "/products/cable-management-sleeve.svg",
   },
   {
     id: "prod-20",
@@ -209,5 +229,6 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ["Accessories", "Light", "Office", "Desk"],
     category: "Accessories",
     description: "Screen-mounted LED desk light bar with auto-dimming and anti-glare design.",
+    image: "/products/monitor-light-bar.svg",
   },
 ];

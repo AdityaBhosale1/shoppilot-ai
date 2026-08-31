@@ -1,9 +1,11 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 interface OpportunityRow {
   product: string;
+  image: string;
   recommendations: number;
   conversion: string;
   upsellRevenue: string;
@@ -14,6 +16,7 @@ interface OpportunityRow {
 const OPPORTUNITIES_DATA: OpportunityRow[] = [
   {
     product: "Gaming Keyboard Pro",
+    image: "/products/gaming-keyboard-pro.svg",
     recommendations: 214,
     conversion: "31.8%",
     upsellRevenue: "₹12,840",
@@ -22,6 +25,7 @@ const OPPORTUNITIES_DATA: OpportunityRow[] = [
   },
   {
     product: "Gaming Mouse X",
+    image: "/products/gaming-mouse-x.svg",
     recommendations: 198,
     conversion: "29.4%",
     upsellRevenue: "₹9,420",
@@ -30,6 +34,7 @@ const OPPORTUNITIES_DATA: OpportunityRow[] = [
   },
   {
     product: "Wireless Headphones Pro",
+    image: "/products/wireless-headphones-pro.svg",
     recommendations: 176,
     conversion: "27.9%",
     upsellRevenue: "₹8,760",
@@ -38,6 +43,7 @@ const OPPORTUNITIES_DATA: OpportunityRow[] = [
   },
   {
     product: "Essential Mousepad",
+    image: "/products/essential-mousepad.svg",
     recommendations: 143,
     conversion: "38.2%",
     upsellRevenue: "₹6,490",
@@ -46,6 +52,7 @@ const OPPORTUNITIES_DATA: OpportunityRow[] = [
   },
   {
     product: "Office Keyboard",
+    image: "/products/office-keyboard.svg",
     recommendations: 126,
     conversion: "22.7%",
     upsellRevenue: "₹4,380",
@@ -91,7 +98,17 @@ export function ConversionOpportunities() {
           <tbody className="divide-y divide-slate-800/60 text-slate-300">
             {OPPORTUNITIES_DATA.map((row) => (
               <tr key={row.product} className="hover:bg-blue-950/20 transition-colors">
-                <td className="py-2.5 font-bold text-white">{row.product}</td>
+                <td className="py-2 font-bold text-white flex items-center gap-2">
+                  <div className="relative w-6 h-6 rounded bg-[#06091e] border border-slate-800 shrink-0 overflow-hidden">
+                    <Image
+                      src={row.image}
+                      alt={`${row.product} product thumbnail`}
+                      fill
+                      className="object-contain p-0.5"
+                    />
+                  </div>
+                  <span className="truncate max-w-[160px] sm:max-w-[200px]">{row.product}</span>
+                </td>
                 <td className="py-2.5">{row.recommendations}</td>
                 <td className="py-2.5 text-emerald-400 font-bold">{row.conversion}</td>
                 <td className="py-2.5 text-cyan-300 font-bold">{row.upsellRevenue}</td>

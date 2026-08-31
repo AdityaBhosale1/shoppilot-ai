@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad_RGBMousepadXL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06091e" />
+      <stop offset="100%" stop-color="#0b112c" />
+    </linearGradient>
+    <linearGradient id="accentGrad_RGBMousepadXL" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#22d3ee" />
+    </linearGradient>
+    <filter id="glow_RGBMousepadXL" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="400" height="300" rx="16" fill="url(#bgGrad_RGBMousepadXL)" stroke="#1e293b" stroke-width="2" />
+  
+  <!-- Subtle Grid Accent -->
+  <pattern id="grid_RGBMousepadXL" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5" opacity="0.4" />
+  </pattern>
+  <rect width="400" height="300" rx="16" fill="url(#grid_RGBMousepadXL)" />
+
+  <!-- Outer Glow Ring -->
+  <circle cx="200" cy="130" r="65" fill="#ec4899" opacity="0.15" filter="url(#glow_RGBMousepadXL)" />
+
+  <!-- Center Product Icon Container -->
+  <rect x="135" y="65" width="130" height="130" rx="24" fill="#030612" stroke="url(#accentGrad_RGBMousepadXL)" stroke-width="2" opacity="0.95" />
+  
+  <!-- Product SVG Icon -->
+  <g transform="translate(160, 90)" fill="none" stroke="url(#accentGrad_RGBMousepadXL)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="16" width="64" height="48" rx="6"/><rect x="14" y="22" width="52" height="36" rx="4" stroke-dasharray="4 4"/><circle cx="60" cy="24" r="3" fill="#22d3ee"/>
+  </g>
+
+  <!-- Category Badge -->
+  <rect x="150" y="210" width="100" height="22" rx="11" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="200" y="225" font-family="monospace" font-size="10" font-weight="bold" fill="#22d3ee" text-anchor="middle" letter-spacing="1">GAMING</text>
+
+  <!-- Product Title -->
+  <text x="200" y="255" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc" text-anchor="middle">RGB Mousepad XL</text>
+</svg>

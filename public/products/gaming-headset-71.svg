@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad_GamingHeadset" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06091e" />
+      <stop offset="100%" stop-color="#0b112c" />
+    </linearGradient>
+    <linearGradient id="accentGrad_GamingHeadset" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <filter id="glow_GamingHeadset" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="400" height="300" rx="16" fill="url(#bgGrad_GamingHeadset)" stroke="#1e293b" stroke-width="2" />
+  
+  <!-- Subtle Grid Accent -->
+  <pattern id="grid_GamingHeadset" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5" opacity="0.4" />
+  </pattern>
+  <rect width="400" height="300" rx="16" fill="url(#grid_GamingHeadset)" />
+
+  <!-- Outer Glow Ring -->
+  <circle cx="200" cy="130" r="65" fill="#f43f5e" opacity="0.15" filter="url(#glow_GamingHeadset)" />
+
+  <!-- Center Product Icon Container -->
+  <rect x="135" y="65" width="130" height="130" rx="24" fill="#030612" stroke="url(#accentGrad_GamingHeadset)" stroke-width="2" opacity="0.95" />
+  
+  <!-- Product SVG Icon -->
+  <g transform="translate(160, 90)" fill="none" stroke="url(#accentGrad_GamingHeadset)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 48 V36 C16 20 26 10 40 10 C54 10 64 20 64 36 V48"/><rect x="8" y="42" width="16" height="24" rx="6"/><rect x="56" y="42" width="16" height="24" rx="6"/><path d="M16 60 Q 30 72 44 64"/>
+  </g>
+
+  <!-- Category Badge -->
+  <rect x="150" y="210" width="100" height="22" rx="11" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="200" y="225" font-family="monospace" font-size="10" font-weight="bold" fill="#a855f7" text-anchor="middle" letter-spacing="1">GAMING</text>
+
+  <!-- Product Title -->
+  <text x="200" y="255" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc" text-anchor="middle">Gaming Headset 7.1</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad_OfficeKeyboard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06091e" />
+      <stop offset="100%" stop-color="#0b112c" />
+    </linearGradient>
+    <linearGradient id="accentGrad_OfficeKeyboard" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#64748b" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <filter id="glow_OfficeKeyboard" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="400" height="300" rx="16" fill="url(#bgGrad_OfficeKeyboard)" stroke="#1e293b" stroke-width="2" />
+  
+  <!-- Subtle Grid Accent -->
+  <pattern id="grid_OfficeKeyboard" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5" opacity="0.4" />
+  </pattern>
+  <rect width="400" height="300" rx="16" fill="url(#grid_OfficeKeyboard)" />
+
+  <!-- Outer Glow Ring -->
+  <circle cx="200" cy="130" r="65" fill="#64748b" opacity="0.15" filter="url(#glow_OfficeKeyboard)" />
+
+  <!-- Center Product Icon Container -->
+  <rect x="135" y="65" width="130" height="130" rx="24" fill="#030612" stroke="url(#accentGrad_OfficeKeyboard)" stroke-width="2" opacity="0.95" />
+  
+  <!-- Product SVG Icon -->
+  <g transform="translate(160, 90)" fill="none" stroke="url(#accentGrad_OfficeKeyboard)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="20" width="72" height="40" rx="6"/><line x1="12" y1="32" x2="68" y2="32"/><line x1="20" y1="48" x2="60" y2="48"/>
+  </g>
+
+  <!-- Category Badge -->
+  <rect x="150" y="210" width="100" height="22" rx="11" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="200" y="225" font-family="monospace" font-size="10" font-weight="bold" fill="#38bdf8" text-anchor="middle" letter-spacing="1">OFFICE</text>
+
+  <!-- Product Title -->
+  <text x="200" y="255" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc" text-anchor="middle">Office Keyboard</text>
+</svg>
