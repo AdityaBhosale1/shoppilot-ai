@@ -93,8 +93,22 @@ export async function runAICommerceWorkflow(
   };
 
   addLog(
-    "AI_REQUEST_RECEIVED",
+    "REQUEST_RECEIVED",
     `Received customer shopping request: "${userMessage}"`,
+    `Session: ${sessionId}`,
+    "INFO"
+  );
+
+  addLog(
+    "INPUT_VALIDATED",
+    "Customer natural language message validated successfully.",
+    `Length: ${userMessage.length} characters`,
+    "SUCCESS"
+  );
+
+  addLog(
+    "INTENT_RECEIVED",
+    `Intent received for processing: "${userMessage}"`,
     `Session: ${sessionId}`,
     "INFO"
   );

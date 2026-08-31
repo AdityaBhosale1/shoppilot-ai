@@ -17,8 +17,8 @@ export function AIShoppingDemo() {
   const [matchedProducts, setMatchedProducts] = useState<Product[]>([]);
   const [, setMerchantProposedCart] = useState<Product[]>([]);
   const [finalCart, setFinalCart] = useState<Product[]>([]);
-  const [rejectedUpsell, setRejectedUpsell] = useState<Product | null>(null);
-  const [acceptedAlternative, setAcceptedAlternative] = useState<Product | null>(null);
+  const [rejectedUpsell, setRejectedUpsell] = useState<{ name: string; price: number; image?: string } | null>(null);
+  const [acceptedAlternative, setAcceptedAlternative] = useState<{ name: string; price: number; image?: string } | null>(null);
   const [currentPrompt, setCurrentPrompt] = useState<string>("");
   const [budgetRemaining, setBudgetRemaining] = useState<number>(0);
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -48,11 +48,13 @@ export function AIShoppingDemo() {
   const handleStartDemo = async (prompt: string) => {
     const trimmedPrompt = prompt ? prompt.trim() : "";
 
+    // 1. Client-side Input Validation
     if (!trimmedPrompt) {
+      setLogs([]);
       addLog(
         "INPUT_VALIDATION_FAILED",
         "Shopping request is empty.",
-        "Actor: ShopPilot Request Validator",
+        "Actor: ShopPilot Request Validator | Reason: Shopping request is empty.",
         "FAILED"
       );
       setIsLoading(false);
@@ -71,9 +73,8 @@ export function AIShoppingDemo() {
     setAcceptedAlternative(null);
     setStage("SEARCHING");
 
-    addLog("INTENT_RECEIVED", `User query: "${trimmedPrompt}"`, "Session: SP-1047", "INFO");
-
     try {
+      // 2. Exact API Request Payload Specification
       const response = await fetch("/api/ai/shop", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -92,11 +93,16 @@ export function AIShoppingDemo() {
           addLog(
             "INPUT_VALIDATION_FAILED",
             data.message || "Shopping request is empty.",
-            "Actor: ShopPilot Request Validator",
+            "Actor: ShopPilot Request Validator | Reason: Shopping request is empty.",
             "FAILED"
           );
         } else {
-          addLog("POLICY_CHECK", data.message || "Failed to process intent.", "Error", "FAILED");
+          addLog(
+            "INPUT_VALIDATION_FAILED",
+            data.message || "Failed to process shopping request.",
+            `Actor: ShopPilot Request Validator | Error: ${data.error || "UNKNOWN_ERROR"}`,
+            "FAILED"
+          );
         }
         setIsLoading(false);
         setStage("IDLE");
@@ -105,80 +111,35 @@ export function AIShoppingDemo() {
 
       const result = data.data;
 
-      // Stage 1: Parsed Intent
-      addLog(
-        "INTENT_PARSED",
-        `Parsed Budget Cap: ₹${result.budget.toLocaleString("en-IN")}`,
-        `Category: ${result.category || "General"}`,
-        "SUCCESS"
-      );
-
-      // Stage 2: Catalog Tool
-      setMatchedProducts(result.matchedProducts || []);
-      addLog(
-        "CATALOG_SEARCH",
-        `Found ${result.matchedProducts?.length || 0} candidate items in inventory.`,
-        "Catalog Search Completed",
-        "INFO"
-      );
-
-      // Stage 3: Merchant Upsell Proposal
-      if (result.rejectedUpsell) {
-        setRejectedUpsell(result.rejectedUpsell);
-        addLog(
-          "MERCHANT_PROPOSAL",
-          `Merchant Growth Agent proposed upsell: ${result.rejectedUpsell.name} (+₹${result.rejectedUpsell.price})`,
-          "Targeting AOV Maximization",
-          "INFO"
-        );
-
-        // Stage 4: Buyer Guardian Rejection
-        addLog(
-          "BUYER_GUARDIAN_BLOCK",
-          `Buyer Guardian BLOCKED ${result.rejectedUpsell.name} (exceeds budget limit).`,
-          `Rule Violation: CUSTOMER_BUDGET_CAP`,
-          "FAILED"
-        );
+      // Update trace logs directly from backend orchestrator
+      if (result.traceLogs && Array.isArray(result.traceLogs)) {
+        setLogs(result.traceLogs);
       }
 
-      // Stage 5: Constraint Negotiation Alternative
-      if (result.acceptedAlternative) {
-        setAcceptedAlternative(result.acceptedAlternative);
-        addLog(
-          "ALTERNATIVE_FOUND",
-          `Found compliant alternative: ${result.acceptedAlternative.name} (₹${result.acceptedAlternative.price})`,
-          "Budget Preserved Safely",
-          "SUCCESS"
-        );
-      }
-
-      // Stage 6: Final Policy Validation & Cart
+      // Update UI states from authoritative response
+      setMatchedProducts(result.productsConsidered || result.primaryRecommendations || []);
       setFinalCart(result.finalCart || []);
-      setTotalAmount(result.finalAmount || 0);
+      setTotalAmount(result.finalTotal || 0);
       setBudgetRemaining(result.budgetRemaining || 0);
       setAovLift(result.aovLift || 0);
 
-      addLog(
-        "CART_FINALIZED",
-        `Cart Total ₹${result.finalAmount.toLocaleString("en-IN")} passed 5/5 Policy Rules.`,
-        "Budget PASS | Stock PASS | Price PASS",
-        "SUCCESS"
-      );
-
-      addLog(
-        "PAYMENT_GATE",
-        "Payment State: BLOCKED. Requires Explicit Customer Authorization.",
-        "Deterministic Policy Protection Active",
-        "WARN"
-      );
+      if (result.negotiation) {
+        if (result.negotiation.rejectedProposal) {
+          setRejectedUpsell(result.negotiation.rejectedProposal);
+        }
+        if (result.negotiation.acceptedAlternative) {
+          setAcceptedAlternative(result.negotiation.acceptedAlternative);
+        }
+      }
 
       setStage("CART_READY");
       setIsLoading(false);
-    } catch {
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : String(err);
       addLog(
-        "POLICY_CHECK",
-        "Error connecting to AI Shopping Service.",
-        "Check network connection.",
+        "INPUT_VALIDATION_FAILED",
+        "Error connecting to AI Shopping API.",
+        `Detail: ${errMsg}`,
         "FAILED"
       );
       setIsLoading(false);
@@ -359,7 +320,7 @@ export function AIShoppingDemo() {
                         Dual-Agent Constraint Negotiation
                       </span>
                     </div>
-                    <span className="text-[10px] text-slate-400">Budget Limit: ₹3,000</span>
+                    <span className="text-[10px] text-slate-400">Budget Limit Protection</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
@@ -369,7 +330,7 @@ export function AIShoppingDemo() {
                         <span className="text-[10px] font-bold text-rose-400 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800/50">
                           Rejected
                         </span>
-                        <span className="text-[10px] text-rose-300/80">Exceeds Limit (+₹297)</span>
+                        <span className="text-[10px] text-rose-300/80">Exceeds Budget</span>
                       </div>
                       <div className="flex items-center gap-2.5 opacity-65">
                         <div className="relative w-10 h-10 rounded-lg bg-[#06091e] border border-slate-800 shrink-0 overflow-hidden p-0.5">
